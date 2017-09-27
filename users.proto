@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package users;
+
+// Define the user service.
+service User {
+    // Get user info with filter.
+    rpc GetUser (UserFilter) returns (stream UserInfo) {}
+    // Create a new user.
+    rpc CreateUser  (UserInfo) returns (CreateUserState) {}
+}
+
+message UserFilter {
+    int32 id = 1;
+}
+
+message UserInfo {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    message Phone {
+        string number = 1;
+        bool isOffice = 2;
+    }
+    repeated Phone Phones = 4;
+}
+
+message CreateUserState {
+    int32 id = 1;
+    bool success = 2;
+}
